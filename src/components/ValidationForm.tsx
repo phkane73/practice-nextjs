@@ -26,7 +26,7 @@ import { toast } from "sonner";
 import { ActiveYn, User } from "./TableUser";
 import { Switch } from "./ui/switch";
 
-interface IValidationFormProps {
+export interface IValidationFormProps {
   childRender: Function;
   user?: User;
 }
@@ -59,7 +59,7 @@ const ValidationForm: React.FC<IValidationFormProps> = ({
       fullname: user?.fullname ?? "",
       username: user?.username ?? "",
       role: user?.role ?? "",
-      projects: user?.projects ?? "",
+      projects: user?.projects.toString() ?? "",
       activeYn: user?.activeYn ?? ActiveYn.Y,
     },
   });
@@ -68,7 +68,23 @@ const ValidationForm: React.FC<IValidationFormProps> = ({
 
   const onSubmit = async (values: User) => {
     if (user) {
-      console.log("1");
+      const res = await axios
+        .patch(
+          process.env.NEXT_PUBLIC_SERVER_URL! + `/user/update/${user.username}`,
+          {
+            ...values,
+            projects: Array.isArray(values.projects)
+              ? values.projects
+              : values.projects.split(",").map((item) => item.trim()),
+          }
+        )
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
+      if (res) {
+        toast.success("Edit user success!!!");
+        childRender();
+      }
     } else {
       const res = await axios
         .post(process.env.NEXT_PUBLIC_SERVER_URL! + "/user/insert", {
@@ -78,7 +94,6 @@ const ValidationForm: React.FC<IValidationFormProps> = ({
             : values.projects.split(",").map((item) => item.trim()),
         })
         .catch((err) => {
-          console.log(err);
           toast.error(err.response.data.message);
         });
       if (res) {
@@ -139,9 +154,6 @@ const ValidationForm: React.FC<IValidationFormProps> = ({
                   <SelectItem value="Admin">Admin</SelectItem>
                 </SelectContent>
               </Select>
-              <FormDescription>
-                You can manage email addresses in your{" "}
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

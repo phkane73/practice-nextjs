@@ -19,7 +19,7 @@ import axios from "axios";
 import { CircleCheck, CircleX, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { SheetEditUser } from "./SheetEditUser";
+import SheetEditUser from "./SheetEditUser";
 import { Button } from "./ui/button";
 
 export enum ActiveYn {
@@ -37,26 +37,16 @@ export interface User {
 
 interface ITableProps {
   render: boolean;
-  listUser?: User[];
+  listUser: User[];
 }
 
 const TableUser: React.FC<ITableProps> = ({ render, listUser }) => {
   const [users, setUsers] = useState<User[]>([]);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isClient, setIsClient] = useState(false);
-
-  const fetchUsers = async () => {
-    const res = await axios.get(
-      process.env.NEXT_PUBLIC_SERVER_URL! + "/user/get-all",
-      {
-        params: {},
-      }
-    );
-    if (!listUser || listUser.length === 0) {
-      setUsers(res.data);
-    } else {
-      setUsers(listUser);
-    }
+  const [tableR, setTableR] = useState(false);
+  const childRender = () => {
+    setTableR(!tableR);
   };
 
   const deleteUser = async (username: string) => {
@@ -70,9 +60,9 @@ const TableUser: React.FC<ITableProps> = ({ render, listUser }) => {
   };
 
   useEffect(() => {
-    fetchUsers();
+    setUsers(listUser);
     setIsClient(true);
-  }, [isDeleted, listUser, render]);
+  }, [isDeleted, listUser, render, tableR]);
 
   return (
     <>
@@ -111,7 +101,10 @@ const TableUser: React.FC<ITableProps> = ({ render, listUser }) => {
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-3 float-end">
-                      <SheetEditUser user={user}></SheetEditUser>
+                      <SheetEditUser
+                        user={user}
+                        childRender={childRender}
+                      ></SheetEditUser>
                       <Dialog>
                         <DialogTrigger asChild>
                           <Button
