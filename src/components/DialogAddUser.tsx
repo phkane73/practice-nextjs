@@ -12,7 +12,7 @@ import { UserPlus2 } from "lucide-react";
 
 import ValidationForm from "./ValidationForm";
 
-const DialogUserAdd = ({ childRender }: { childRender: Function }) => {
+const DialogUserAdd = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -28,7 +28,7 @@ const DialogUserAdd = ({ childRender }: { childRender: Function }) => {
             Enter information user to add user
           </DialogDescription>
         </DialogHeader>
-        <ValidationForm childRender={childRender}></ValidationForm>
+        <ValidationForm></ValidationForm>
       </DialogContent>
     </Dialog>
   );

@@ -9,13 +9,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import React from "react";
-import ValidationForm, { IValidationFormProps } from "./ValidationForm";
+import { User } from "./TableUser";
+import ValidationForm from "./ValidationForm";
 
-const SheetEditUser: React.FC<IValidationFormProps> = ({
-  user,
-  childRender,
-}) => {
+const SheetEditUser = ({ user }: { user: User }) => {
   return (
     <Sheet key="right">
       <SheetTrigger asChild>
@@ -30,7 +27,7 @@ const SheetEditUser: React.FC<IValidationFormProps> = ({
             You can edit information user-selected.
           </SheetDescription>
         </SheetHeader>
-        <ValidationForm user={user} childRender={childRender}></ValidationForm>
+        <ValidationForm user={user}></ValidationForm>
       </SheetContent>
     </Sheet>
   );

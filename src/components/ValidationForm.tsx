@@ -21,20 +21,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useUserContext } from "@/lib/context";
 import axios from "axios";
 import { toast } from "sonner";
 import { ActiveYn, User } from "./TableUser";
 import { Switch } from "./ui/switch";
 
-export interface IValidationFormProps {
-  childRender: Function;
-  user?: User;
-}
+const ValidationForm = ({ user }: { user: User }) => {
+  const { setUsers } = useUserContext();
 
-const ValidationForm: React.FC<IValidationFormProps> = ({
-  childRender,
-  user,
-}) => {
   const formSchema = z.object({
     fullname: z.string().min(1, {
       message: "Full name is required",
@@ -63,7 +58,6 @@ const ValidationForm: React.FC<IValidationFormProps> = ({
       activeYn: user?.activeYn ?? ActiveYn.Y,
     },
   });
-
   const { reset } = createForm;
 
   const onSubmit = async (values: User) => {
@@ -83,7 +77,11 @@ const ValidationForm: React.FC<IValidationFormProps> = ({
         });
       if (res) {
         toast.success("Edit user success!!!");
-        childRender();
+        setUsers((prevUsers) =>
+          prevUsers.map((u) =>
+            u.username === user.username ? { ...u, ...res.data } : u
+          )
+        );
       }
     } else {
       const res = await axios
@@ -99,7 +97,9 @@ const ValidationForm: React.FC<IValidationFormProps> = ({
       if (res) {
         toast.success("Add user success!!!");
         reset();
-        childRender();
+        setUsers((prev) => {
+          return [...prev, res.data];
+        });
       }
     }
   };

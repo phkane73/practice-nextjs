@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useUserContext } from "@/lib/context";
 import axios from "axios";
 import { CircleCheck, CircleX, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -35,19 +36,9 @@ export interface User {
   activeYn: ActiveYn;
 }
 
-interface ITableProps {
-  render: boolean;
-  listUser: User[];
-}
-
-const TableUser: React.FC<ITableProps> = ({ render, listUser }) => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [isDeleted, setIsDeleted] = useState(false);
+const TableUser = () => {
+  const { users, setUsers } = useUserContext();
   const [isClient, setIsClient] = useState(false);
-  const [tableR, setTableR] = useState(false);
-  const childRender = () => {
-    setTableR(!tableR);
-  };
 
   const deleteUser = async (username: string) => {
     const res = await axios.delete(
@@ -55,14 +46,13 @@ const TableUser: React.FC<ITableProps> = ({ render, listUser }) => {
     );
     if (res) {
       toast.success("Delete user success!!!");
+      setUsers(users.filter((user) => user.username !== username));
     }
-    setIsDeleted(!isDeleted);
   };
 
   useEffect(() => {
-    setUsers(listUser);
     setIsClient(true);
-  }, [isDeleted, listUser, render, tableR]);
+  }, []);
 
   return (
     <>
@@ -101,10 +91,7 @@ const TableUser: React.FC<ITableProps> = ({ render, listUser }) => {
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-3 float-end">
-                      <SheetEditUser
-                        user={user}
-                        childRender={childRender}
-                      ></SheetEditUser>
+                      <SheetEditUser user={user}></SheetEditUser>
                       <Dialog>
                         <DialogTrigger asChild>
                           <Button
