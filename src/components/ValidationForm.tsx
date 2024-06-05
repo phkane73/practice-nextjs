@@ -27,7 +27,7 @@ import { toast } from "sonner";
 import { ActiveYn, User } from "./TableUser";
 import { Switch } from "./ui/switch";
 
-const ValidationForm = ({ user }: { user: User }) => {
+const ValidationForm = ({ user }: { user?: User }) => {
   const { setUsers } = useUserContext();
 
   const formSchema = z.object({

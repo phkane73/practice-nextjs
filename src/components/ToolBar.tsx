@@ -4,8 +4,8 @@ import SearchUser from "./SearchUser";
 export const ToolBar = () => {
   return (
     <div className="w-full flex justify-between items-center">
-      <DialogUserAdd></DialogUserAdd>
-      <SearchUser></SearchUser>
+      <DialogUserAdd />
+      <SearchUser />
     </div>
   );
 };
