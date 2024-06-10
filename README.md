@@ -44,3 +44,7 @@ yarn dev
 #### You can search users by any field or multiple field in toolbar.
 
 ![Search User UI](https://res.cloudinary.com/dzfwvoijo/image/upload/v1717994477/practice_next_clv/search.png)
+
+### Link video demo
+
+[![Watch the video](https://res.cloudinary.com/dzfwvoijo/image/upload/v1718003154/practice_next_clv/bg-video.png)](https://youtu.be/vCupohajG4k)
