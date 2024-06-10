@@ -24,7 +24,7 @@ import { z } from "zod";
 import { useUserContext } from "@/lib/context";
 import axios from "axios";
 import { toast } from "sonner";
-import { ActiveYn, User } from "./TableUser";
+import { ActiveYn, User } from "./Columns";
 import { Switch } from "./ui/switch";
 
 const ValidationForm = ({ user }: { user?: User }) => {

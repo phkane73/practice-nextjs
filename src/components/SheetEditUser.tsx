@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { User } from "./TableUser";
+import { User } from "./Columns";
 import ValidationForm from "./ValidationForm";
 
 const SheetEditUser = ({ user }: { user: User }) => {

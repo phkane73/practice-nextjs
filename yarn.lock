@@ -616,7 +616,7 @@
 
 "@tanstack/react-table@^8.17.3":
   version "8.17.3"
-  resolved "https://registry.npmjs.org/@tanstack/react-table/-/react-table-8.17.3.tgz"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.17.3.tgz#4e10b4cf5355a40d6d72a83d3f4b3ecd32f56bf4"
   integrity sha512-5gwg5SvPD3lNAXPuJJz1fOCEZYk9/GeBFH3w/hCgnfyszOIzwkwgp5I7Q4MJtn0WECp84b5STQUDdmvGi8m3nA==
   dependencies:
     "@tanstack/table-core" "8.17.3"

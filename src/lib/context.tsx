@@ -1,4 +1,4 @@
-import { ActiveYn, User } from "@/components/TableUser";
+import { ActiveYn, User } from "@/components/Columns";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 
 interface IUserContext {
@@ -12,10 +12,11 @@ interface IUserContext {
 
 const UserContext = createContext<IUserContext | undefined>(undefined);
 
-export const UserProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
-  const [users, setUsers] = useState<User[]>([]);
+export const UserProvider: React.FC<{
+  children: ReactNode;
+  initData: User[];
+}> = ({ children, initData }) => {
+  const [users, setUsers] = useState<User[]>(initData);
   const [role, setRole] = useState<string>("");
   const [activeYn, setActiveYn] = useState<ActiveYn | string>("");
 

@@ -5,7 +5,7 @@ import { useUserContext } from "@/lib/context";
 import axios from "axios";
 import { SquareX } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { ActiveYn } from "./TableUser";
+import { ActiveYn } from "./Columns";
 import { Button } from "./ui/button";
 import {
   Select,
